@@ -37,11 +37,44 @@ function App() {
     );
   }
 
+  /**const nextQuestion = () =>  {
+    fetch("https://opentdb.com/api.php?amount=1&category=9&type=multiple")
+    .then((response) => response.json())
+    .then((data) => {
+      setQuestionData(data.results[0]);
+      setSelectedAnswer(null);
+    })
+  };**/
+
+  /**function nextQuestion() {
+    fetch("https://opentdb.com/api.php?amount=1&category=9&type=multiple")
+    .then((response) => response.json())
+    .then((data) => {
+      setQuestionData(data.results[0]);
+      setSelectedAnswer(null);
+    })
+    .catch((error) => {
+      console.error("There is an error while fetching questions.");
+    });
+  };**/
+
+  async function nextQuestion() {
+    try{
+      const response = await fetch("https://opentdb.com/api.php?amount=1&category=9&type=multiple");
+      const data = await response.json();
+      setQuestionData(data.results[0]);
+      setSelectedAnswer(null);
+    }
+    catch(error) {
+        console.error("There is an error while fetching questions.", error);
+    }
+  }
+
   return (
     <div className="w-100 my-5 d-flex justify-content-center align-items-center">
       <div style={{ maxWidth: "45%" }}>
         <h1 className="text-center">Trivia App</h1>
-        <button className="btn btn-success">Next Question</button>
+        <button className="btn btn-success" onClick={nextQuestion}>Next Question</button>
         {card}
       </div>
     </div>
